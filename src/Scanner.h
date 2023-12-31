@@ -19,7 +19,16 @@ class Scanner {
     int current = 0;
     int line = 1;
 
+    char advance();
+    void addToken(TokenType t);
+    void identifier();
     bool isAtEnd();
+    bool match(char expected);
+    void number();
+    char peek();
+    char peekNext();
+    void scanToken();
+    void string();
 
 };
 

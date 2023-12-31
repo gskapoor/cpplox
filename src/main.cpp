@@ -2,6 +2,8 @@
 #include <fstream>
 #include <string>
 
+#include<Scanner.h>
+
 void report(int line, std::string where, std::string message) {
 
   std::cerr << "[line " << line << "] Error" << where << ": " << message << std::endl;
@@ -13,7 +15,12 @@ void error(int line, std::string message){
 }
 
 void run(std::string source){
-  std::cout << source << std::endl;
+  Scanner scanner(source);
+  std::vector<Token> tokens = scanner.scanTokens();
+
+  for (Token token: tokens){
+    std::cout << token.toString() << std::endl;
+  }
 }
 
 void runFile(std::string path) {
