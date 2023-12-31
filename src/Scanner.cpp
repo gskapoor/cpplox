@@ -1,17 +1,18 @@
 #include <iostream>
 #include <map>
 
-#include "src/Scanner.h"
+#include "Scanner.h"
+#include "Literal.h"
 
 OptionalLiteral makeOptionalLiteral(TokenType type, const std::string& lexeme){
   switch (type)
   {
   case TokenType::NUMBER:
-    return makeOptionalLiteral(std::stod(lexeme));
+    return OptionalLiteral(std::in_place, std::stod(lexeme));
   case TokenType::STRING:
     // TODO: Make sure this actually works properly
     // This may lex things incorrectly, the example does things different
-    return makeOptionalLiteral(lexeme.substr(1, lexeme.size() - 2));
+    return OptionalLiteral(std::in_place, lexeme.substr(1, lexeme.size() - 2));
   default: return std::nullopt;
   }
 }
@@ -52,7 +53,7 @@ Scanner::Scanner(std::string p_source)
   :source(p_source){}
 
 char Scanner::advance() {
-  source.at(current++);
+  return source.at(current++);
 }
 
 char Scanner::peek(){
@@ -67,7 +68,7 @@ char Scanner::peekNext() {
 
 void Scanner::addToken(TokenType type) {
   std::string text = source.substr(start, current - start);
-  tokens.emplace_back(new Token(type, text, makeOptionalLiteral(type, text), line));
+  tokens.emplace_back(type, text, makeOptionalLiteral(type, text), line);
 }
 
 bool Scanner::match(char expected){
@@ -113,6 +114,16 @@ void Scanner::identifier() {
   addToken(type);
 }
 
+void Scanner::multiline() {
+  while(!isAtEnd() && (peek() != '*' || peekNext() != '/')) advance();
+
+  if (!isAtEnd()){
+    advance();
+    advance();
+  }
+  // TODO: throw error if is at end
+}
+
 void Scanner::scanToken() {
   char c = advance();
   switch (c)
@@ -146,6 +157,8 @@ void Scanner::scanToken() {
     case '/':
       if (match('/')){
         while (peek() != '\n' && !isAtEnd()) advance();
+      } else if (match('*')){
+        multiline();
       } else {
         addToken(TokenType::SLASH);
       }
@@ -157,11 +170,14 @@ void Scanner::scanToken() {
     case  '\n':
       line++;
       break;
+    case '"': string(); break;
 
     default:
       // TODO: Add an actual error reporter
       if (isDigit(c)){
-
+        number();
+      } else if (isAlpha(c)){
+        identifier();
       } else {
         std::cerr << "[line " << line << "] Error: Unexpected char" << std::endl;
       }
@@ -170,14 +186,12 @@ void Scanner::scanToken() {
 }
 
 std::vector<Token> Scanner::scanTokens() {
-
   while (!isAtEnd()) {
     start = current;
-    // scanToken();
+    scanToken();
   }
 
-  tokens.emplace_back(new Token(
-    TokenType::LOX_EOF, "", std::nullopt, line ));
+  tokens.emplace_back(TokenType::LOX_EOF, "", std::nullopt, line );
 
   return tokens;
 }

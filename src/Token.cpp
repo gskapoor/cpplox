@@ -1,4 +1,4 @@
-#include "src/Token.h"
+#include "Token.h"
 
 #include <map>
 
@@ -59,6 +59,7 @@ std::string Token::toString() const {
   if (literal.has_value()){
     res += " " + getLiteralString(literal.value());
   }
+  return res;
 }
 
 TokenType Token::getType() const {

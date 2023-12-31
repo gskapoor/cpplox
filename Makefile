@@ -1,23 +1,36 @@
-CXX := g++
-CXXFLAGS := -std=c++23
-SRCDIR := src
-BUILDDIR := build 
-TARGET := main.out
+CXX := g++            # Compiler
+CXXFLAGS := -std=c++17 # Compiler flags
+SRCDIR := src          # Source code directory
+BUILDDIR := build      # Build directory
+TARGET := main.out   # Executable name
 
+# Source files
 SRCEXT := cpp
-SOURCES := $(wildcard $(SRCDIR)/*.$(SRCEXT)) # GET ALL SOURCE FILES
-OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)%,$(SOURCES:.$(SRCEXT)=.o))
+SOURCES := src/Literal.cpp src/Scanner.cpp src/Token.cpp src/main.cpp
+OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 
-all: $(TARGET)
+$(info SOURCES: $(SOURCES))
+$(info OBJECTS: $(OBJECTS))
 
-main.out: main.o
-	$(CXX) -o main.out main.o
+# Build executable
+$(TARGET): $(OBJECTS)
+	@echo " Linking..."
+	$(CXX) $^ -o $(TARGET)
 
-main.o: src/main.cpp
-	$(CXX) -c src/main.cpp
-
-clean:
-	@echo " Cleaning..."; 
-	rm -f *.o *~ main
+# Compile source files
+$(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
+	@mkdir -p $(dir $@)
+	@echo " Compiling $<..."
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 .PHONY: clean
+
+clean:
+	@echo " Cleaning..."
+	$(RM) -r $(BUILDDIR) $(TARGET)
+
+.PHONY: run
+
+run: $(TARGET)
+	@echo " Running..."
+	./$(TARGET)

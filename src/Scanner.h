@@ -4,7 +4,7 @@
 
 #include <vector>
 
-#include "src/Token.h"
+#include "Token.h"
 
 class Scanner {
   public:
@@ -24,6 +24,7 @@ class Scanner {
     void identifier();
     bool isAtEnd();
     bool match(char expected);
+    void multiline();
     void number();
     char peek();
     char peekNext();

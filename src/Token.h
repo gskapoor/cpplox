@@ -6,7 +6,7 @@
 #include <string>
 #include <variant>
 
-#include "src/Literal.h"
+#include "Literal.h"
 
 // Saw this in someone else's implementation
 // using OptionalLiteral = std::optional<Literal>;

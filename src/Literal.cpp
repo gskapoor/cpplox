@@ -1,4 +1,4 @@
-#include "src/Literal.h"
+#include "Literal.h"
 
 std::string getLiteralString(const Literal& value){
 
