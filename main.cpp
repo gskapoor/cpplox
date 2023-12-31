@@ -2,6 +2,20 @@
 #include <fstream>
 #include <string>
 
+void report(int line, std::string where, std::string message) {
+
+  std::cerr << "[line " << line << "] Error" << where << ": " << message << std::endl;
+
+}
+
+void error(int line, std::string message){
+  report(line, "", message);
+}
+
+void run(std::string source){
+  std::cout << source << std::endl;
+}
+
 void runFile(std::string path) {
 
   std::ifstream inputFile(path);
@@ -18,7 +32,8 @@ void runFile(std::string path) {
 
   inputFile.close();
 
-  std::cout << "File Content\n" << fileContent << std::endl;
+  std::cout << "File Content" << std::endl;
+  run(fileContent);
 
   return;
 }
@@ -29,7 +44,7 @@ void runPrompt() {
   std::string line;
 
   while (std::getline(std::cin, line) && !line.empty()) {
-    std::cout << line << std::endl;
+    run(line);
     
     std::cout << ">> ";
   }
