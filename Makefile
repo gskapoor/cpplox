@@ -13,8 +13,8 @@ all: $(TARGET)
 main.out: main.o
 	$(CXX) -o main.out main.o
 
-main.o: main.cpp
-	$(CXX) -c main.cpp
+main.o: src/main.cpp
+	$(CXX) -c src/main.cpp
 
 clean:
 	@echo " Cleaning..."; 
