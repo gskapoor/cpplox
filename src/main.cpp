@@ -2,7 +2,6 @@
 #include <fstream>
 #include <string>
 
-#include "Scanner.h"
 #include "Interpreter.h"
 
 int main(int argc, char* argv[]) {
