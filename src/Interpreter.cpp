@@ -15,13 +15,14 @@ std::vector<Token> scan (const std::string& source){
 
 Interpreter::Interpreter() {}
 
-void Interpreter::runFile(std::string path) {
+int Interpreter::runFile(std::string path) {
 
   std::ifstream inputFile(path);
 
   if (!inputFile.is_open()) {
     std::cerr << "Error opening file: " << path << std::endl;
-    return;
+    // TODO:  Find correct error code
+    return 65;
   }
 
   std::string fileContent(
@@ -32,6 +33,10 @@ void Interpreter::runFile(std::string path) {
 
   std::cout << "File Content" << std::endl;
   interpret(fileContent);
+  // DATA ERROR
+  if (hadError) return 65;
+
+  return 0;
 }
 
 void Interpreter::runRepl(){
@@ -41,6 +46,7 @@ void Interpreter::runRepl(){
   while(std::getline(std::cin, line) && !line.empty()) {
     interpret(line);
 
+    hadError = false;
     std::cout << "> ";
   }
 }
@@ -54,4 +60,10 @@ void Interpreter::interpret(const std::string& source){
   }
 }
 
+void Interpreter::report(int line, std::string where, std::string message){
+  std::cerr << "[Line: " << line << "] Error" << where << ": " << message << std::endl;
+}
 
+void Interpreter::error(int line, std::string message) {
+  report(line, "", message);
+}

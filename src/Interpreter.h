@@ -8,12 +8,17 @@ class Interpreter {
 
   public:
 
+
     Interpreter();
-    void runFile(const std::string path);
+    int runFile(const std::string path);
     void runRepl();
+    void error(int line, std::string message);
 
   private:
+    bool hadError = false;
+
     void interpret(const std::string& source);
+    void report(int line, std::string where, std::string message);
 
 };
 
