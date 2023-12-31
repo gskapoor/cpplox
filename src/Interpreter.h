@@ -9,12 +9,10 @@ class Interpreter {
   public:
 
     Interpreter();
-    int runScript(const std::string fileLocation);
+    void runFile(const std::string path);
     void runRepl();
 
   private:
-    Scanner s;
-
     void interpret(const std::string& source);
 
 };

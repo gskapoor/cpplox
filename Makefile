@@ -6,7 +6,7 @@ TARGET := main.out   # Executable name
 
 # Source files
 SRCEXT := cpp
-SOURCES := src/Literal.cpp src/Scanner.cpp src/Token.cpp src/main.cpp
+SOURCES := src/Literal.cpp src/Scanner.cpp src/Token.cpp src/main.cpp src/Interpreter.cpp
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 
 $(info SOURCES: $(SOURCES))
@@ -27,7 +27,7 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 
 clean:
 	@echo " Cleaning..."
-	$(RM) -r $(BUILDDIR) $(TARGET)
+	$(RM) -r src/*.o $(TARGET)
 
 .PHONY: run
 
