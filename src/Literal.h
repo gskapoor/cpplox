@@ -15,4 +15,4 @@ OptionalLiteral makeOptionalLiteral(double d);
 
 OptionalLiteral makeOptionalLiteral(const std::string& lexeme);
 
-#endif;
+#endif
