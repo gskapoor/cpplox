@@ -2,8 +2,10 @@
 #include <iostream>
 #include <fstream>
 
+#include "AstPrinter.h"
 #include "Interpreter.h"
 #include "Scanner.h"
+#include "Parser.h"
 
 std::vector<Token> scan (const std::string& source){
   Scanner scanner(source);
@@ -54,10 +56,13 @@ void Interpreter::runRepl(){
 void Interpreter::interpret(const std::string& source){
 
   std::vector<Token> tokens = scan(source); 
+  Parser parser(tokens);
+  std::unique_ptr<Expr> expr = std::move(parser.parse());
 
-  for (Token token: tokens){
-    std::cout << token.toString() << std::endl;
-  }
+  AstPrinter a;
+
+  std::cout << (a.toString(expr)) << std::endl;
+  
 }
 
 void Interpreter::report(int line, std::string where, std::string message){

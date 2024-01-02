@@ -6,7 +6,7 @@
 #include <string>
 #include <optional>
 
-using Literal = std::variant<std::string, double>;
+using Literal = std::variant<std::string, double, bool>;
 using OptionalLiteral = std::optional<Literal>;
 
 std::string getLiteralString(const Literal& value);

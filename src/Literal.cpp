@@ -15,9 +15,13 @@ std::string getLiteralString(const Literal& value){
       }
       return result;
     }
+    case 2: {
+      bool b = std::get<2>(value);
+      return (b ? "true": "false");
+    }
     default:
       static_assert(
-        std::variant_size_v<Literal> == 2,
+        std::variant_size_v<Literal> == 3,
         "Incorrect Literal size!"
       );
       return "";
