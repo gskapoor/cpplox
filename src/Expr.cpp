@@ -2,6 +2,14 @@
 
 #include "Expr.h"
 
+TernaryExpr::TernaryExpr(std::unique_ptr<Expr> left, std::unique_ptr<Expr> mid, std::unique_ptr<Expr> right): 
+  left(std::move(left)), mid(std::move(mid)), right(std::move(right))
+{}
+
+void TernaryExpr::accept(ExprVisitor &visitor){
+  return visitor.visit(*this);
+}
+
 BinaryExpr::BinaryExpr(std::unique_ptr<Expr> left, Token op, std::unique_ptr<Expr> right):
   left(std::move(left)), op(std::move(op)), right(std::move(right))
 {}

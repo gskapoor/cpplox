@@ -9,6 +9,18 @@ std::string AstPrinter::toString(const std::unique_ptr<Expr>& expr) {
   return out;
 }
 
+void AstPrinter::visit(const TernaryExpr& expr) {
+  out += "(";
+  expr.left->accept(*this);
+  out += " ? ";
+  expr.mid->accept(*this);
+  out += " : ";
+  expr.right->accept(*this);
+  out += " )";
+
+  return;
+}
+
 void AstPrinter::visit(const BinaryExpr& expr) {
   out += "(" + expr.op.getLexeme() + " ";
 

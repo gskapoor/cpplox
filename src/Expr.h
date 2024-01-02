@@ -13,6 +13,8 @@ struct UnaryExpr;
 
 struct ExprVisitor
 {
+  virtual void visit(const TernaryExpr &expr ) = 0;
+
   virtual void visit(const BinaryExpr &expr ) = 0;
 
   virtual void visit(const GroupExpr &expr ) = 0;
@@ -26,6 +28,17 @@ struct ExprVisitor
 struct Expr
 {
   virtual void accept(ExprVisitor &visitor) = 0;
+};
+
+struct TernaryExpr : Expr
+{
+  const std::unique_ptr<Expr> left;
+  const std::unique_ptr<Expr> mid;
+  const std::unique_ptr<Expr> right;
+
+  TernaryExpr(std::unique_ptr<Expr> left, std::unique_ptr<Expr> mid, std::unique_ptr<Expr> right);
+
+  void accept(ExprVisitor &visitor) override;
 };
 
 struct BinaryExpr : Expr 

@@ -14,6 +14,8 @@ public:
 
 private:
 
+  void visit(const TernaryExpr &expr ) override;
+
   void visit(const BinaryExpr &expr ) override;
 
   void visit(const GroupExpr &expr ) override;
