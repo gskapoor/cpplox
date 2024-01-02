@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 
-#include "Interpreter.h"
+#include "Lox.h"
 
 int main(int argc, char* argv[]) {
 
