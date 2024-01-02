@@ -1,5 +1,5 @@
-#ifndef INTERPRETER_H
-#define INTERPRETER_H
+#ifndef LOX_H
+#define LOX_H 
 
 #include "Scanner.h"
 #include <string>
