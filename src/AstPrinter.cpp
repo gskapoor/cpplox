@@ -9,7 +9,7 @@ std::string AstPrinter::toString(const std::unique_ptr<Expr>& expr) {
   return out;
 }
 
-void AstPrinter::visit(const BinaryExpr& expr) {
+std::any AstPrinter::visit(const BinaryExpr& expr) {
   out += "(" + expr.op.getLexeme() + " ";
 
   // Get left expression
@@ -22,29 +22,29 @@ void AstPrinter::visit(const BinaryExpr& expr) {
 
   out += ")";
 
-  return;
+  return 0;
 }
 
-void AstPrinter::visit(const GroupExpr& expr) {
+std::any AstPrinter::visit(const GroupExpr& expr) {
   out += "(group ";
   expr.expr_in->accept(*this);
   out += ")";
 
-  return;
+  return 0;
 }
 
-void AstPrinter::visit(const LiteralExpr& expr){
+std::any AstPrinter::visit(const LiteralExpr& expr){
   out += getLiteralString(expr.value);
 
-  return;
+  return 0;
 }
 
-void AstPrinter::visit(const UnaryExpr& expr){
+std::any AstPrinter::visit(const UnaryExpr& expr){
   out += "(" + expr.op.getLexeme() + " ";
   expr.right->accept(*this);
   out += ")";
 
-  return;
+  return 0;
 }
 
 /*

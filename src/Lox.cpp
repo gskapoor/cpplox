@@ -3,7 +3,7 @@
 #include <fstream>
 
 #include "AstPrinter.h"
-#include "Interpreter.h"
+#include "Lox.h"
 #include "Scanner.h"
 #include "Parser.h"
 
@@ -15,9 +15,9 @@ std::vector<Token> scan (const std::string& source){
   return tokensVec;
 }
 
-Interpreter::Interpreter() {}
+Lox::Lox() {}
 
-int Interpreter::runFile(std::string path) {
+int Lox::runFile(std::string path) {
 
   std::ifstream inputFile(path);
 
@@ -41,7 +41,7 @@ int Interpreter::runFile(std::string path) {
   return 0;
 }
 
-void Interpreter::runRepl(){
+void Lox::runRepl(){
   std:: cout << "> " ;
   std::string line;
 
@@ -53,7 +53,7 @@ void Interpreter::runRepl(){
   }
 }
 
-void Interpreter::interpret(const std::string& source){
+void Lox::interpret(const std::string& source){
 
   std::vector<Token> tokens = scan(source); 
   Parser parser(tokens);
@@ -65,10 +65,10 @@ void Interpreter::interpret(const std::string& source){
   
 }
 
-void Interpreter::report(int line, std::string where, std::string message){
+void Lox::report(int line, std::string where, std::string message){
   std::cerr << "[Line: " << line << "] Error" << where << ": " << message << std::endl;
 }
 
-void Interpreter::error(int line, std::string message) {
+void Lox::error(int line, std::string message) {
   report(line, "", message);
 }

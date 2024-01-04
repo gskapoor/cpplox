@@ -4,12 +4,12 @@
 #include "Scanner.h"
 #include <string>
 
-class Interpreter {
+class Lox {
 
   public:
 
 
-    Interpreter();
+    Lox();
     int runFile(const std::string path);
     void runRepl();
     void error(int line, std::string message);

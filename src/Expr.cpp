@@ -6,27 +6,27 @@ BinaryExpr::BinaryExpr(std::unique_ptr<Expr> left, Token op, std::unique_ptr<Exp
   left(std::move(left)), op(std::move(op)), right(std::move(right))
 {}
 
-void BinaryExpr::accept(ExprVisitor &visitor){
-  return visitor.visit(*this);
+std::any BinaryExpr::accept(ExprVisitor &visitor){
+  visitor.visit(*this);
 }
 
 GroupExpr::GroupExpr(std::unique_ptr<Expr> expr_in) : expr_in(std::move(expr_in))
 {}
 
-void GroupExpr::accept(ExprVisitor &visitor){
-  return visitor.visit(*this);
+std::any GroupExpr::accept(ExprVisitor &visitor){
+  visitor.visit(*this);
 }
 
 LiteralExpr::LiteralExpr(Literal value) : value(std::move(value))
 {}
 
-void LiteralExpr::accept(ExprVisitor &visitor){
-  return visitor.visit(*this);
+std::any LiteralExpr::accept(ExprVisitor &visitor){
+  visitor.visit(*this);
 }
 
 UnaryExpr::UnaryExpr(Token op, std::unique_ptr<Expr> right) : op(std::move(op)), right(std::move(right))
 {}
 
-void UnaryExpr::accept(ExprVisitor &visitor){
-  return visitor.visit(*this);
+std::any UnaryExpr::accept(ExprVisitor &visitor){
+  visitor.visit(*this);
 }

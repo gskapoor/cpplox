@@ -13,19 +13,19 @@ struct UnaryExpr;
 
 struct ExprVisitor
 {
-  virtual void visit(const BinaryExpr &expr ) = 0;
+  virtual std::any visit(const BinaryExpr &expr ) = 0;
 
-  virtual void visit(const GroupExpr &expr ) = 0;
+  virtual std::any visit(const GroupExpr &expr ) = 0;
 
-  virtual void visit(const LiteralExpr &expr ) = 0;
+  virtual std::any visit(const LiteralExpr &expr ) = 0;
 
-  virtual void visit(const UnaryExpr &expr ) = 0;
+  virtual std::any visit(const UnaryExpr &expr ) = 0;
 
 };
 
 struct Expr
 {
-  virtual void accept(ExprVisitor &visitor) = 0;
+  virtual std::any accept(ExprVisitor &visitor) = 0;
 };
 
 struct BinaryExpr : Expr 
@@ -36,7 +36,7 @@ struct BinaryExpr : Expr
 
   BinaryExpr(std::unique_ptr<Expr> left, Token op, std::unique_ptr<Expr> right);
 
-  void accept(ExprVisitor &visitor) override;
+  std::any accept(ExprVisitor &visitor) override;
 };
 
 struct GroupExpr : Expr
@@ -45,7 +45,7 @@ struct GroupExpr : Expr
 
   explicit GroupExpr(std::unique_ptr<Expr> expr);
 
-  void accept(ExprVisitor &visitor) override;
+  std::any accept(ExprVisitor &visitor) override;
 };
 
 struct LiteralExpr : Expr
@@ -54,7 +54,7 @@ struct LiteralExpr : Expr
 
   explicit LiteralExpr(Literal value);
 
-  void accept(ExprVisitor &visitor) override;
+  std::any accept(ExprVisitor &visitor) override;
 };
 
 struct UnaryExpr : Expr
@@ -64,7 +64,7 @@ struct UnaryExpr : Expr
 
   UnaryExpr(Token op, std::unique_ptr<Expr> right);
 
-  void accept(ExprVisitor &visitor) override;
+  std::any accept(ExprVisitor &visitor) override;
 };
 
 #endif

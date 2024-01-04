@@ -20,10 +20,6 @@ std::string getLiteralString(const Literal& value){
       return (b ? "true": "false");
     }
     default:
-      static_assert(
-        std::variant_size_v<Literal> == 3,
-        "Incorrect Literal size!"
-      );
       return "";
   }
 }
