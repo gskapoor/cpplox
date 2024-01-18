@@ -39,7 +39,7 @@ std::any AstPrinter::visitLiteralExpr(const LiteralExpr& expr){
   if (!literal.has_value()){
     out += "| NO VALUE FOUND |";
   } else if (literal.type() == typeid(std::string)){
-    out += std::any_cast<std::string>(literal);
+    out += '"' + std::any_cast<std::string>(literal) + '"';
   } else if (literal.type() == typeid(double)){
     out += std::to_string(std::any_cast<double>(literal));
   } else {

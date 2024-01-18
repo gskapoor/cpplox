@@ -14,6 +14,8 @@ auto TokenTypeString(const TokenType value){
     {TokenType::DOT, "DOT"},
     {TokenType::SEMICOLON, "SEMICOLON"},
     {TokenType::SLASH, "SLASH"},
+    {TokenType::SLASH, "QUESTION"},
+    {TokenType::SLASH, "COLON"},
     {TokenType::STAR, "STAR"},
     {TokenType::BANG, "BANG"},
     {TokenType::BANG_EQUAL, "BANG_EQUAL"},
