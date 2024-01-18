@@ -2,20 +2,6 @@
 #include <map>
 
 #include "Scanner.h"
-#include "Literal.h"
-
-OptionalLiteral makeOptionalLiteral(TokenType type, const std::string& lexeme){
-  switch (type)
-  {
-  case TokenType::NUMBER:
-    return OptionalLiteral(std::in_place, std::stod(lexeme));
-  case TokenType::STRING:
-    // TODO: Make sure this actually works properly
-    // This may lex things incorrectly, the example does things different
-    return OptionalLiteral(std::in_place, lexeme.substr(1, lexeme.size() - 2));
-  default: return std::nullopt;
-  }
-}
 
 bool isDigit(char c){
   return c >= '0' && c <= '9';
@@ -68,7 +54,12 @@ char Scanner::peekNext() {
 
 void Scanner::addToken(TokenType type) {
   std::string text = source.substr(start, current - start);
-  tokens.emplace_back(type, text, makeOptionalLiteral(type, text), line);
+  tokens.emplace_back(type, text, line);
+}
+
+void Scanner::addToken(TokenType type, std::any literal) {
+  std::string text = source.substr(start, current - start);
+  tokens.emplace_back(type, text, literal, line);
 }
 
 bool Scanner::match(char expected){
@@ -92,7 +83,7 @@ void Scanner::string(){
 
   advance();
 
-  addToken(TokenType::STRING);
+  addToken(TokenType::STRING, source.substr(start + 1, current - start - 2));
 }
 
 void Scanner::number(){
@@ -103,7 +94,7 @@ void Scanner::number(){
     while(isDigit(peek())) advance();
   }
 
-  addToken(TokenType::NUMBER);
+  addToken(TokenType::NUMBER, std::stod(source.substr(start, current - start)));
 }
 
 void Scanner::identifier() {

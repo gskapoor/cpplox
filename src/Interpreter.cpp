@@ -15,7 +15,7 @@ std::any Interpreter::visit(const UnaryExpr& expr) {
 
   switch (expr.op.getType()){
     case TokenType::MINUS :
-      return -1 * right;
+      return -1 * std::any_cast<double>(right);
   }
 }
 

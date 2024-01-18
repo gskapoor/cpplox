@@ -6,7 +6,7 @@ TARGET := main.out   # Executable name
 
 # Source files
 SRCEXT := cpp
-SOURCES := src/Literal.cpp src/Scanner.cpp src/Token.cpp src/main.cpp src/Lox.cpp src/Expr.cpp src/AstPrinter.cpp src/Parser.cpp
+SOURCES := src/Scanner.cpp src/Token.cpp src/main.cpp src/Lox.cpp src/Expr.cpp src/AstPrinter.cpp src/Parser.cpp
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 
 $(info SOURCES: $(SOURCES))

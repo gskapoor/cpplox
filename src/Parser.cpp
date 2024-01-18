@@ -106,12 +106,12 @@ std::unique_ptr<Expr> Parser::unary() {
 }
 
 std::unique_ptr<Expr> Parser::primary() {
-  if (match({TokenType::FALSE})) return std::make_unique<LiteralExpr>(Literal(false));
-  if (match({TokenType::TRUE})) return std::make_unique<LiteralExpr>(Literal(true));
-  if (match({TokenType::NIL})) return std::make_unique<LiteralExpr>(nullptr);
+  if (match({TokenType::FALSE})) return std::make_unique<LiteralExpr>(false);
+  if (match({TokenType::TRUE})) return std::make_unique<LiteralExpr>(true);
+  if (match({TokenType::NIL})) return std::make_unique<LiteralExpr>(std::any{});
 
   if (match({TokenType::NUMBER, TokenType::STRING})){
-    return std::make_unique<LiteralExpr>(previous().getLiteral().value());
+    return std::make_unique<LiteralExpr>(previous().getLiteral());
   }
 
   if (match({TokenType::LEFT_PAREN})){

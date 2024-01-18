@@ -50,9 +50,9 @@ struct GroupExpr : Expr
 
 struct LiteralExpr : Expr
 {
-  const Literal value;
+  const std::any value;
 
-  explicit LiteralExpr(Literal value);
+  explicit LiteralExpr(std::any value);
 
   std::any accept(ExprVisitor &visitor) override;
 };

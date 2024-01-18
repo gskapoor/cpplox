@@ -17,7 +17,7 @@ std::any GroupExpr::accept(ExprVisitor &visitor){
   visitor.visit(*this);
 }
 
-LiteralExpr::LiteralExpr(Literal value) : value(std::move(value))
+LiteralExpr::LiteralExpr(std::any value) : value(std::move(value))
 {}
 
 std::any LiteralExpr::accept(ExprVisitor &visitor){

@@ -5,8 +5,7 @@
 #include <optional>
 #include <string>
 #include <variant>
-
-#include "Literal.h"
+#include <any>
 
 // Saw this in someone else's implementation
 // using OptionalLiteral = std::optional<Literal>;
@@ -40,19 +39,24 @@ enum class TokenType{
 class Token{
   public:
     Token(TokenType p_type, std::string p_lexeme, 
-      OptionalLiteral p_literal, int p_line);
+      std::any p_literal, int p_line);
+
+    Token(TokenType p_type, std::string p_lexeme, int p_line);
+
+    TokenType getType() const {return type;};
+    std::string getTypeString() const;
+
+    int getLine() const {return line;};
+    std::string getLexeme() const {return lexeme;};
+    std::any getLiteral() const {return literal;};
 
     std::string toString() const;
-    TokenType getType() const;
-    std::string getTypeString() const;
-    int getLine() const;
-    std::string getLexeme() const;
-    OptionalLiteral getLiteral() const;
+    std::string literalToString() const;
 
   private:
     TokenType type;
     std::string lexeme;
-    OptionalLiteral literal;
+    std::any literal;
     int line = -1;
 
 };

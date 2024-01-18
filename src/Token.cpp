@@ -1,6 +1,7 @@
 #include "Token.h"
 
 #include <map>
+#include <any>
 
 auto TokenTypeString(const TokenType value){
 
@@ -48,32 +49,40 @@ auto TokenTypeString(const TokenType value){
   return lookUpTable.find(value)->second;
 }
 
-Token::Token(TokenType p_type, std::string p_lexeme, OptionalLiteral p_literal, int p_line)
+Token::Token(TokenType p_type, std::string p_lexeme, std::any p_literal, int p_line)
   : type(p_type),
     lexeme(std::move(p_lexeme)),
     literal(std::move(p_literal)),
     line(p_line) {}
 
+Token::Token(TokenType p_type, std::string p_lexeme, int p_line)
+  : type(p_type),
+    lexeme(std::move(p_lexeme)),
+    line(p_line)
+{}
+
 std::string Token::toString() const {
   std::string res = this->getTypeString() + " " + lexeme;
   if (literal.has_value()){
-    res += " " + getLiteralString(literal.value());
+    res += " " + literalToString();
   }
   return res;
 }
 
-TokenType Token::getType() const {
-  return type;
+std::string Token::literalToString() const {
+
+  switch (type) {
+    case TokenType::STRING:
+      return std::any_cast<std::string>(literal);
+    case TokenType::NUMBER:
+      return std::to_string(std::any_cast<double>(literal));
+    default:
+      return "";
+  }
+
 }
 
 std::string Token::getTypeString() const {
   return TokenTypeString(type);
 }
 
-std::string Token::getLexeme() const {
-  return lexeme;
-}
-
-OptionalLiteral Token::getLiteral() const {
-  return literal;
-}

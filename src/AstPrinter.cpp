@@ -34,7 +34,17 @@ std::any AstPrinter::visit(const GroupExpr& expr) {
 }
 
 std::any AstPrinter::visit(const LiteralExpr& expr){
-  out += getLiteralString(expr.value);
+  std::any literal = expr.value;
+  if (!literal.has_value()){
+    out += "| NO VALUE FOUND |";
+  } else if (literal.type() == typeid(std::string)){
+    out += std::any_cast<std::string>(literal);
+  } else if (literal.type() == typeid(double)){
+    out += std::any_cast<double>(literal);
+  } else {
+    out += "| INVALID VALUE |";
+  }
+
 
   return 0;
 }
