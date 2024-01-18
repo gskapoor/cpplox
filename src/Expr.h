@@ -13,13 +13,13 @@ struct UnaryExpr;
 
 struct ExprVisitor
 {
-  virtual std::any visit(const BinaryExpr &expr ) = 0;
+  virtual std::any visitBinaryExpr(const BinaryExpr &expr ) = 0;
 
-  virtual std::any visit(const GroupExpr &expr ) = 0;
+  virtual std::any visitGroupExpr(const GroupExpr &expr ) = 0;
 
-  virtual std::any visit(const LiteralExpr &expr ) = 0;
+  virtual std::any visitLiteralExpr(const LiteralExpr &expr ) = 0;
 
-  virtual std::any visit(const UnaryExpr &expr ) = 0;
+  virtual std::any visitUnaryExpr(const UnaryExpr &expr ) = 0;
 
 };
 
@@ -50,7 +50,7 @@ struct GroupExpr : Expr
 
 struct LiteralExpr : Expr
 {
-  const std::any value;
+  std::any value = std::any{};
 
   explicit LiteralExpr(std::any value);
 

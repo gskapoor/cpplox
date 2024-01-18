@@ -1,4 +1,5 @@
 #include <memory>
+#include <iostream>
 
 #include "Expr.h"
 
@@ -7,26 +8,26 @@ BinaryExpr::BinaryExpr(std::unique_ptr<Expr> left, Token op, std::unique_ptr<Exp
 {}
 
 std::any BinaryExpr::accept(ExprVisitor &visitor){
-  visitor.visit(*this);
+  return visitor.visitBinaryExpr(*this);
 }
 
 GroupExpr::GroupExpr(std::unique_ptr<Expr> expr_in) : expr_in(std::move(expr_in))
 {}
 
 std::any GroupExpr::accept(ExprVisitor &visitor){
-  visitor.visit(*this);
+  return visitor.visitGroupExpr(*this);
 }
 
 LiteralExpr::LiteralExpr(std::any value) : value(std::move(value))
 {}
 
 std::any LiteralExpr::accept(ExprVisitor &visitor){
-  visitor.visit(*this);
+  return visitor.visitLiteralExpr(*this);
 }
 
 UnaryExpr::UnaryExpr(Token op, std::unique_ptr<Expr> right) : op(std::move(op)), right(std::move(right))
 {}
 
 std::any UnaryExpr::accept(ExprVisitor &visitor){
-  visitor.visit(*this);
+  return visitor.visitUnaryExpr(*this);
 }

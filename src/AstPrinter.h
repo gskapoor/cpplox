@@ -14,15 +14,15 @@ public:
 
 private:
 
-  std::any visit(const BinaryExpr &expr ) override;
+  std::any visitBinaryExpr(const BinaryExpr &expr ) override;
 
-  std::any visit(const GroupExpr &expr ) override;
+  std::any visitGroupExpr(const GroupExpr &expr ) override;
 
-  std::any visit(const LiteralExpr &expr ) override;
+  std::any visitLiteralExpr(const LiteralExpr &expr ) override;
 
-  std::any visit(const UnaryExpr &expr ) override;
+  std::any visitUnaryExpr(const UnaryExpr &expr ) override;
 
-  std::string out;
+  std::string out = "";
 };
 
 #endif
