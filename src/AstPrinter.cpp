@@ -9,7 +9,7 @@ std::string AstPrinter::toString(const std::unique_ptr<Expr>& expr) {
   return out;
 }
 
-std::any AstPrinter::visitBinaryExpr(const BinaryExpr& expr) {
+std::any AstPrinter::visit(const BinaryExpr& expr) {
   out += "(" + expr.op.getLexeme() + " ";
 
   // Get left expression
@@ -25,7 +25,7 @@ std::any AstPrinter::visitBinaryExpr(const BinaryExpr& expr) {
   return 0;
 }
 
-std::any AstPrinter::visitGroupExpr(const GroupExpr& expr) {
+std::any AstPrinter::visit(const GroupExpr& expr) {
   out += "(group ";
   expr.expr_in->accept(*this);
   out += ")";
@@ -33,7 +33,7 @@ std::any AstPrinter::visitGroupExpr(const GroupExpr& expr) {
   return 0;
 }
 
-std::any AstPrinter::visitLiteralExpr(const LiteralExpr& expr){
+std::any AstPrinter::visit(const LiteralExpr& expr){
 
   std::any literal = expr.value;
   if (!literal.has_value()){
@@ -49,7 +49,7 @@ std::any AstPrinter::visitLiteralExpr(const LiteralExpr& expr){
   return std::any{};
 }
 
-std::any AstPrinter::visitUnaryExpr(const UnaryExpr& expr){
+std::any AstPrinter::visit(const UnaryExpr& expr){
 
   out += "(" + expr.op.getLexeme() + " ";
   expr.right->accept(*this);
@@ -58,7 +58,7 @@ std::any AstPrinter::visitUnaryExpr(const UnaryExpr& expr){
   return 0;
 }
 
-std::any AstPrinter::visitTernaryExpr(const TernaryExpr& expr){
+std::any AstPrinter::visit(const TernaryExpr& expr){
   out += "(";
 
   // Get left expression

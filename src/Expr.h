@@ -14,15 +14,15 @@ struct TernaryExpr;
 
 struct ExprVisitor
 {
-  virtual std::any visitBinaryExpr(const BinaryExpr &expr ) = 0;
+  virtual std::any visit(const BinaryExpr &expr ) = 0;
 
-  virtual std::any visitGroupExpr(const GroupExpr &expr ) = 0;
+  virtual std::any visit(const GroupExpr &expr ) = 0;
 
-  virtual std::any visitLiteralExpr(const LiteralExpr &expr ) = 0;
+  virtual std::any visit(const LiteralExpr &expr ) = 0;
 
-  virtual std::any visitUnaryExpr(const UnaryExpr &expr ) = 0;
+  virtual std::any visit(const UnaryExpr &expr ) = 0;
 
-  virtual std::any visitTernaryExpr(const TernaryExpr &expr ) = 0;
+  virtual std::any visit(const TernaryExpr &expr ) = 0;
 
 };
 
