@@ -56,6 +56,9 @@ void Lox::runRepl(){
 void Lox::interpret(const std::string& source){
 
   std::vector<Token> tokens = scan(source); 
+  for (Token t : tokens){
+    std::cout << t.toString() << std::endl;
+  }
   Parser parser(tokens);
   std::unique_ptr<Expr> expr = std::move(parser.parse());
 

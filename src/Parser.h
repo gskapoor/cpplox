@@ -26,6 +26,7 @@ class Parser {
   std::unique_ptr<Expr> equality();
   std::unique_ptr<Expr> factor();
   std::unique_ptr<Expr> primary();
+  std::unique_ptr<Expr> ternary();
   std::unique_ptr<Expr> term();
   std::unique_ptr<Expr> unary();
 

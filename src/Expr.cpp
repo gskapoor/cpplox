@@ -31,3 +31,10 @@ UnaryExpr::UnaryExpr(Token op, std::unique_ptr<Expr> right) : op(std::move(op)),
 std::any UnaryExpr::accept(ExprVisitor &visitor){
   return visitor.visitUnaryExpr(*this);
 }
+
+TernaryExpr::TernaryExpr(std::unique_ptr<Expr> left, std::unique_ptr<Expr> middle, std::unique_ptr<Expr> right):left(std::move(left)), middle(std::move(middle)), right(std::move(right))
+{}
+
+std::any TernaryExpr::accept(ExprVisitor &visitor){
+  return visitor.visitTernaryExpr(*this);
+}

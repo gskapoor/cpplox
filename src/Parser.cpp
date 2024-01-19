@@ -20,12 +20,12 @@ std::unique_ptr<Expr> Parser::expression() {
 }
 
 std::unique_ptr<Expr> Parser::comma() {
-  std::unique_ptr<Expr> expr = equality();
+  std::unique_ptr<Expr> expr = ternary();
 
   while (match({TokenType::COMMA})){
     Token op = previous();
 
-    std::unique_ptr<Expr> right = equality();
+    std::unique_ptr<Expr> right = ternary();
     expr = std::make_unique<BinaryExpr>(
       std::move(expr), op, std::move(right)
     );
@@ -33,6 +33,21 @@ std::unique_ptr<Expr> Parser::comma() {
 
   return expr;
 
+}
+
+std::unique_ptr<Expr> Parser::ternary(){
+  std::unique_ptr<Expr> expr = equality();
+
+  if (match({TokenType::QUESTION})){
+    std::unique_ptr<Expr> middle = expression();
+    consume(TokenType::COLON, "Expect ':' in ternary operator ");
+    std::unique_ptr<Expr> right = equality();
+    expr = std::make_unique<TernaryExpr>(
+      std::move(expr), std::move(middle), std::move(right)
+    );
+  }
+
+  return expr;
 }
 
 std::unique_ptr<Expr> Parser::equality() {

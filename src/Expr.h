@@ -10,6 +10,7 @@ struct BinaryExpr;
 struct GroupExpr;
 struct LiteralExpr;
 struct UnaryExpr;
+struct TernaryExpr;
 
 struct ExprVisitor
 {
@@ -20,6 +21,8 @@ struct ExprVisitor
   virtual std::any visitLiteralExpr(const LiteralExpr &expr ) = 0;
 
   virtual std::any visitUnaryExpr(const UnaryExpr &expr ) = 0;
+
+  virtual std::any visitTernaryExpr(const TernaryExpr &expr ) = 0;
 
 };
 
@@ -63,6 +66,18 @@ struct UnaryExpr : Expr
   const std::unique_ptr<Expr> right;
 
   UnaryExpr(Token op, std::unique_ptr<Expr> right);
+
+  std::any accept(ExprVisitor &visitor) override;
+};
+
+struct TernaryExpr : Expr
+{
+
+  const std::unique_ptr<Expr> left;
+  const std::unique_ptr<Expr> middle;
+  const std::unique_ptr<Expr> right;
+
+  TernaryExpr(std::unique_ptr<Expr> left, std::unique_ptr<Expr> middle, std::unique_ptr<Expr> right);
 
   std::any accept(ExprVisitor &visitor) override;
 };

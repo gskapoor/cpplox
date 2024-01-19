@@ -22,6 +22,8 @@ private:
 
   std::any visitUnaryExpr(const UnaryExpr &expr ) override;
 
+  std::any visitTernaryExpr(const TernaryExpr &expr ) override;
+
   std::string out = "";
 };
 

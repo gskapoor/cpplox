@@ -58,6 +58,26 @@ std::any AstPrinter::visitUnaryExpr(const UnaryExpr& expr){
   return 0;
 }
 
+std::any AstPrinter::visitTernaryExpr(const TernaryExpr& expr){
+  out += "(";
+
+  // Get left expression
+  expr.left->accept(*this);
+  out += " ? ";
+
+  // very mid
+  expr.middle->accept(*this);
+
+  out += " : ";
+
+  // Get right expression
+  expr.right->accept(*this);
+
+  out += ")";
+
+  return 0;
+}
+
 /*
 int main(){
   std::unique_ptr<Expr> expression = std::make_unique<BinaryExpr>(
