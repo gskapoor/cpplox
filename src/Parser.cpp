@@ -41,7 +41,7 @@ std::unique_ptr<Expr> Parser::ternary(){
   if (match({TokenType::QUESTION})){
     std::unique_ptr<Expr> middle = expression();
     consume(TokenType::COLON, "Expect ':' in ternary operator ");
-    std::unique_ptr<Expr> right = equality();
+    std::unique_ptr<Expr> right = expression();
     expr = std::make_unique<TernaryExpr>(
       std::move(expr), std::move(middle), std::move(right)
     );
