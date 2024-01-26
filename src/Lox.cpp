@@ -7,6 +7,8 @@
 #include "Scanner.h"
 #include "Parser.h"
 
+using namespace Error;
+
 std::vector<Token> scan (const std::string& source){
   Scanner scanner(source);
 
@@ -68,10 +70,27 @@ void Lox::interpret(const std::string& source){
   
 }
 
-void Lox::report(int line, std::string where, std::string message){
-  std::cerr << "[Line: " << line << "] Error" << where << ": " << message << std::endl;
-}
+namespace Error 
+{
+  std::vector<ErrorInfo> exceptionlist{};
+  bool hadError = false;
+  bool hadRuntimeError = false;
 
-void Lox::error(int line, std::string message) {
-  report(line, "", message);
+  void addError(unsigned int line, std::string where, std::string message) noexcept {
+    exceptionList.emplace_back(line, std::move(where), std::move(message));
+    hadError = true;
+  }
+
+  void addError(const Token& token, std::string message) noexcept {
+    if (token.getType() == TokenType::LOX_EOF){
+      exceptionList.emplace_back(token.getLine(), "at end", std::move(message));
+    }
+  }
+
+  void report() noexcept {
+    for (const auto& exception : exceptionList){
+    std::cerr << "[Line: " << exception.line << "] Error" << exception.where << ": " << exception.message << std::endl;
+    }
+  }
+
 }

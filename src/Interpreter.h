@@ -12,9 +12,12 @@ class Interpreter : ExprVisitor {
   std::any visit(const LiteralExpr& expr) override;
   std::any visit(const GroupExpr& expr) override;
   std::any visit(const UnaryExpr& expr) override;
+  std::any visit(const TernaryExpr& expr) override;
 
   private:
-  
+
+  bool isTruthy(std::any value);
+  bool isEqual(std::any a, std::any b);
   std::any evaluate(const std::unique_ptr<Expr>& expr);
 
 };
